@@ -3,8 +3,12 @@ import SwiftData
 
 struct WrittenReviewView: View {
     let deck: Deck
+    var cards: [Card]? = nil
+    var cardFilter: PracticeQueue.CardFilter = .all
     @Environment(\.dismiss) private var dismiss
+    @AppStorage("practiceRoundSize") private var practiceRoundSize = PracticeQueue.defaultRoundSize
     @AppStorage("dailyNewCardLimit") private var dailyNewCardLimit = PracticeQueue.defaultDailyNewCardLimit
+    @AppStorage("neverForgetEnabled") private var neverForgetEnabled = false
 
     @State private var queue: [Card] = []
     @State private var index = 0
@@ -12,6 +16,8 @@ struct WrittenReviewView: View {
     @State private var verdict: Verdict?
     @State private var rightCount = 0
     @State private var wrongCount = 0
+    @State private var requeuePile: [Card] = []
+    @State private var isRepass = false
     @FocusState private var typing: Bool
 
     enum Verdict { case exact, close, wrong }
@@ -28,31 +34,38 @@ struct WrittenReviewView: View {
     }
 
     private func loadQueue() {
+        let source = cards ?? deck.cards
         var q = PracticeQueue.ordered(
-            deck.cards,
+            source,
             onlyDue: true,
+            roundSize: practiceRoundSize,
+            filter: cardFilter,
             dailyNewCardLimit: dailyNewCardLimit,
-            roundSize: PracticeQueue.defaultRoundSize
+            neverForgetEnabled: neverForgetEnabled
         )
         if q.isEmpty {
             q = PracticeQueue.ordered(
-                deck.cards,
+                source,
                 onlyDue: false,
+                roundSize: practiceRoundSize,
+                filter: cardFilter,
                 dailyNewCardLimit: dailyNewCardLimit,
-                roundSize: PracticeQueue.defaultRoundSize
+                neverForgetEnabled: neverForgetEnabled
             )
         }
         queue = q
         index = 0
         rightCount = 0
         wrongCount = 0
+        requeuePile = []
+        isRepass = false
         resetCurrent()
     }
 
     private func resetCurrent() {
         typed = ""
         verdict = nil
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { typing = true }
+        typing = true
     }
 
     private var emptyState: some View {
@@ -66,14 +79,26 @@ struct WrittenReviewView: View {
 
     private var summary: some View {
         VStack(spacing: Theme.Space.m) {
-            Image(systemName: "sparkles").font(.system(size: 56))
-                .foregroundStyle(Theme.focus)
-            Text(Encouragement.random(Encouragement.sessionDone))
-                .font(.title3).fontWeight(.semibold)
-            Text("\(rightCount) right · \(wrongCount) missed").foregroundStyle(.secondary)
-            HStack {
-                Button("Done") { dismiss() }.buttonStyle(.bordered)
-                Button("Another round") { loadQueue() }.buttonStyle(.borderedProminent)
+            if !isRepass && !requeuePile.isEmpty {
+                Image(systemName: "arrow.clockwise").font(.system(size: 56))
+                    .foregroundStyle(Theme.stretch)
+                Text("\(rightCount) right · \(wrongCount) missed")
+                    .font(.title3).fontWeight(.semibold)
+                Text("\(requeuePile.count) card\(requeuePile.count == 1 ? "" : "s") you missed — review them once more.")
+                    .font(.subheadline).foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                Button("Re-practice missed") { startRepass() }.buttonStyle(.borderedProminent)
+                Button("Done for now") { dismiss() }.buttonStyle(.bordered)
+            } else {
+                Image(systemName: "sparkles").font(.system(size: 56))
+                    .foregroundStyle(Theme.focus)
+                Text(Encouragement.random(Encouragement.sessionDone))
+                    .font(.title3).fontWeight(.semibold)
+                Text("\(rightCount) right · \(wrongCount) missed").foregroundStyle(.secondary)
+                HStack {
+                    Button("Done") { dismiss() }.buttonStyle(.bordered)
+                    Button("Another round") { loadQueue() }.buttonStyle(.borderedProminent)
+                }
             }
         }
         .padding()
@@ -82,21 +107,31 @@ struct WrittenReviewView: View {
     private var questionView: some View {
         let card = queue[index]
         return VStack(spacing: Theme.Space.m) {
-            progress
+            progress(for: card)
             promptCard(card)
+                .id(card.id)
+                .transition(.asymmetric(
+                    insertion: .move(edge: .trailing).combined(with: .opacity),
+                    removal: .move(edge: .leading).combined(with: .opacity)
+                ))
             answerField
             verdictBanner(card)
+                .transition(.move(edge: .bottom).combined(with: .opacity))
             actionButtons(card)
             Spacer()
         }
         .padding(.bottom, Theme.Space.m)
+        .animation(.easeOut(duration: 0.15), value: card.id)
+        .animation(.easeOut(duration: 0.15), value: verdict != nil)
     }
 
-    private var progress: some View {
+    private func progress(for card: Card) -> some View {
         VStack(spacing: 4) {
             HStack {
                 Text("\(index + 1) of \(queue.count)")
                     .font(.footnote).foregroundStyle(.secondary)
+                Spacer()
+                DifficultyPicker(card: card)
                 Spacer()
                 Text("✓ \(rightCount)").font(.footnote).foregroundStyle(Theme.success)
             }
@@ -174,25 +209,33 @@ struct WrittenReviewView: View {
     private func actionButtons(_ card: Card) -> some View {
         switch verdict {
         case .none:
-            Button("Check") { check() }
-                .frame(maxWidth: .infinity).padding(.vertical, 12)
-                .background(Color.accentColor, in: RoundedRectangle(cornerRadius: Theme.Radius.m))
-                .foregroundStyle(.white)
-                .padding(.horizontal, Theme.Space.m)
-                .disabled(typed.trimmingCharacters(in: .whitespaces).isEmpty)
+            Button { check() } label: {
+                Text("Check")
+                    .frame(maxWidth: .infinity).padding(.vertical, 14)
+                    .contentShape(Rectangle())
+            }
+            .background(Color.accentColor, in: RoundedRectangle(cornerRadius: Theme.Radius.m))
+            .foregroundStyle(.white)
+            .padding(.horizontal, Theme.Space.m)
+            .disabled(typed.trimmingCharacters(in: .whitespaces).isEmpty)
         case .exact, .wrong:
-            Button("Next") { advance() }
-                .frame(maxWidth: .infinity).padding(.vertical, 12)
-                .background(Color.accentColor, in: RoundedRectangle(cornerRadius: Theme.Radius.m))
-                .foregroundStyle(.white)
-                .padding(.horizontal, Theme.Space.m)
+            Button { advance() } label: {
+                Text("Next")
+                    .frame(maxWidth: .infinity).padding(.vertical, 14)
+                    .contentShape(Rectangle())
+            }
+            .background(Color.accentColor, in: RoundedRectangle(cornerRadius: Theme.Radius.m))
+            .foregroundStyle(.white)
+            .padding(.horizontal, Theme.Space.m)
         case .close:
             HStack(spacing: Theme.Space.s) {
                 Button("Not yet") {
                     let wasNew = card.isNew
                     card.rate(2); wrongCount += 1
+                    HapticService.wrong()
                     StudyHistory.recordReview()
                     if wasNew { StudyHistory.bumpNewCardsIntroduced(by: 1) }
+                    if !isRepass { requeuePile.append(card) }
                     advance()
                 }
                 .frame(maxWidth: .infinity).padding(.vertical, 12)
@@ -201,6 +244,7 @@ struct WrittenReviewView: View {
                 Button("Got it") {
                     let wasNew = card.isNew
                     card.rate(4); rightCount += 1
+                    HapticService.correct()
                     StudyHistory.recordReview()
                     if wasNew { StudyHistory.bumpNewCardsIntroduced(by: 1) }
                     advance()
@@ -224,12 +268,15 @@ struct WrittenReviewView: View {
         switch result {
         case .exact:
             card.rate(4); rightCount += 1
+            HapticService.correct()
             StudyHistory.recordReview()
             if wasNew { StudyHistory.bumpNewCardsIntroduced(by: 1) }
         case .wrong:
             card.rate(2); wrongCount += 1
+            HapticService.wrong()
             StudyHistory.recordReview()
             if wasNew { StudyHistory.bumpNewCardsIntroduced(by: 1) }
+            if !isRepass { requeuePile.append(card) }
         case .close:
             break // user decides via the two-button banner
         }
@@ -237,8 +284,16 @@ struct WrittenReviewView: View {
     }
 
     private func advance() {
-        index += 1
+        withAnimation(.easeOut(duration: 0.15)) { index += 1 }
         if index < queue.count { resetCurrent() }
+    }
+
+    private func startRepass() {
+        queue = requeuePile
+        requeuePile = []
+        isRepass = true
+        index = 0
+        resetCurrent()
     }
 
     private func grade(typed: String, expected: String) -> Verdict {

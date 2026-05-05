@@ -1,0 +1,637 @@
+[
+  {
+    "id": "indian_polity",
+    "name": "Indian Polity",
+    "icon": "building.columns.fill",
+    "colorHex": "#E07820",
+    "cardCount": 745,
+    "filename": "library_indian_polity.json",
+    "chapters": [
+      {
+        "name": "Constitution & Preamble",
+        "cardCount": 89,
+        "deckId": "f348132d-ec63-b12d-0786-e62510a5be91"
+      },
+      {
+        "name": "Fundamental Rights",
+        "cardCount": 66,
+        "deckId": "b75524fb-3167-d650-a1cd-7c4d26492b63"
+      },
+      {
+        "name": "Directive Principles & Duties",
+        "cardCount": 35,
+        "deckId": "8280676c-152d-883c-2f7b-10c7f0296c2d"
+      },
+      {
+        "name": "Parliament",
+        "cardCount": 108,
+        "deckId": "1459a7d1-b61a-5d7e-5bbf-e495564ffd5a"
+      },
+      {
+        "name": "President & Vice President",
+        "cardCount": 86,
+        "deckId": "d43c97e2-725c-e6e0-2eb3-8685f18141c6"
+      },
+      {
+        "name": "Prime Minister & Cabinet",
+        "cardCount": 17,
+        "deckId": "e32cbd2f-9d4d-783b-4de1-25d24236c46e"
+      },
+      {
+        "name": "Judiciary",
+        "cardCount": 60,
+        "deckId": "2acc38dd-ea13-269f-afae-0195e06ab4f0"
+      },
+      {
+        "name": "State Government",
+        "cardCount": 52,
+        "deckId": "23779148-64d5-5380-a15d-e3ef0c7fc089"
+      },
+      {
+        "name": "Constitutional Bodies",
+        "cardCount": 103,
+        "deckId": "3a75ecfd-8101-1d78-fef9-4930f3b5f794"
+      },
+      {
+        "name": "Emergency & Anti-Defection",
+        "cardCount": 28,
+        "deckId": "396d909f-a986-ca5c-bb59-f4bfd0e732d3"
+      },
+      {
+        "name": "Local Self-Government",
+        "cardCount": 31,
+        "deckId": "f50f9636-47dd-bbcf-6bad-ee9aed6dc62e"
+      },
+      {
+        "name": "Miscellaneous",
+        "cardCount": 70,
+        "deckId": "b1c53c52-ee32-2ff6-bf5e-433d191bfa47"
+      }
+    ]
+  },
+  {
+    "id": "indian_history",
+    "name": "Indian History",
+    "icon": "scroll.fill",
+    "colorHex": "#A0522D",
+    "cardCount": 780,
+    "filename": "library_indian_history.json",
+    "chapters": [
+      {
+        "name": "Ancient India",
+        "cardCount": 169,
+        "deckId": "69ef372d-cd41-6eca-c66d-6c9ef3130d75"
+      },
+      {
+        "name": "Buddhism & Jainism",
+        "cardCount": 39,
+        "deckId": "582a5fa8-adbd-045e-51e8-1524267de939"
+      },
+      {
+        "name": "South India & Regional Kingdoms",
+        "cardCount": 55,
+        "deckId": "04ff21c5-8685-780f-d667-284c8a847765"
+      },
+      {
+        "name": "Medieval India & Delhi Sultanate",
+        "cardCount": 52,
+        "deckId": "f99d3d80-1444-ade9-d41f-9e0abf13406d"
+      },
+      {
+        "name": "Mughal Empire",
+        "cardCount": 117,
+        "deckId": "72e7d123-04c6-2b52-b4bc-bba398c0ff87"
+      },
+      {
+        "name": "Bhakti, Sufi & Social Reform",
+        "cardCount": 79,
+        "deckId": "fb8edcda-dbbb-acc1-77af-5c9ea27638de"
+      },
+      {
+        "name": "Maratha & Later Rulers",
+        "cardCount": 71,
+        "deckId": "f0cbffe3-8cfc-19f4-00c1-ad8ff65b8a00"
+      },
+      {
+        "name": "British India",
+        "cardCount": 60,
+        "deckId": "51980d74-aa71-340a-f578-257ae5bf832e"
+      },
+      {
+        "name": "Freedom Movement",
+        "cardCount": 97,
+        "deckId": "81cd30c3-e61d-9263-b04e-c8c440295f4a"
+      },
+      {
+        "name": "Art, Culture & Post-Independence",
+        "cardCount": 41,
+        "deckId": "884b1bfa-a0a1-76ae-7db2-a9b08628e217"
+      }
+    ]
+  },
+  {
+    "id": "indian_geography",
+    "name": "Indian Geography",
+    "icon": "map.fill",
+    "colorHex": "#2D7A4F",
+    "cardCount": 499,
+    "filename": "library_indian_geography.json",
+    "chapters": [
+      {
+        "name": "Physical Features",
+        "cardCount": 58,
+        "deckId": "c485e61c-91f1-99bf-e92b-a573ae629b83"
+      },
+      {
+        "name": "Rivers & Water Bodies",
+        "cardCount": 95,
+        "deckId": "4b066f76-3edd-1ff7-f597-17cbec3d8783"
+      },
+      {
+        "name": "Climate & Monsoon",
+        "cardCount": 53,
+        "deckId": "cb3d01a6-b9a5-71d3-54a4-98a3cde600d3"
+      },
+      {
+        "name": "Soils, Forests & Biodiversity",
+        "cardCount": 56,
+        "deckId": "e35aa4c4-e9f0-e8ce-5554-724effd05cb6"
+      },
+      {
+        "name": "Agriculture & Industry",
+        "cardCount": 66,
+        "deckId": "6f443817-9ee8-b0b1-702d-ab7dc1c83765"
+      },
+      {
+        "name": "Minerals & Resources",
+        "cardCount": 24,
+        "deckId": "d35d26dd-b773-8d46-128d-0801102a4781"
+      },
+      {
+        "name": "World Geography",
+        "cardCount": 140,
+        "deckId": "035ecf31-ef4c-5cb0-bc7a-34de32326f27"
+      },
+      {
+        "name": "Indian Tribes & People",
+        "cardCount": 7,
+        "deckId": "e2ac76ee-f7ae-6fad-0f2e-1b6f8a09e4c8"
+      }
+    ]
+  },
+  {
+    "id": "indian_economy",
+    "name": "Indian Economy",
+    "icon": "chart.line.uptrend.xyaxis",
+    "colorHex": "#1565C0",
+    "cardCount": 364,
+    "filename": "library_indian_economy.json",
+    "chapters": [
+      {
+        "name": "GDP & National Income",
+        "cardCount": 43,
+        "deckId": "574e9a0e-2a57-b6af-f49c-6c81e193d86e"
+      },
+      {
+        "name": "Banking & RBI",
+        "cardCount": 84,
+        "deckId": "b1970e3b-aff4-ea44-44e1-d5ea466e2f39"
+      },
+      {
+        "name": "Budget, Taxes & Fiscal Policy",
+        "cardCount": 73,
+        "deckId": "8c4d121b-d581-78a2-b02f-f5dbd605aaa9"
+      },
+      {
+        "name": "Inflation & Markets",
+        "cardCount": 55,
+        "deckId": "acb2a102-1c2f-8670-2739-2fccdb8fc799"
+      },
+      {
+        "name": "Planning & Poverty",
+        "cardCount": 38,
+        "deckId": "42d8dcfe-6fec-a83d-1efe-611b7c96e577"
+      },
+      {
+        "name": "Agriculture & Schemes",
+        "cardCount": 17,
+        "deckId": "d9ce5755-64b5-6fbe-5df8-4c6f1b0f28ba"
+      },
+      {
+        "name": "Trade & International Finance",
+        "cardCount": 47,
+        "deckId": "d015fe88-3249-968b-8ac9-5c92a601a8b8"
+      },
+      {
+        "name": "Insurance & Miscellaneous",
+        "cardCount": 7,
+        "deckId": "d6cf41fc-9c1d-1fef-9fbc-7aa7c83553b8"
+      }
+    ]
+  },
+  {
+    "id": "biology",
+    "name": "Biology",
+    "icon": "leaf.fill",
+    "colorHex": "#27AE60",
+    "cardCount": 627,
+    "filename": "library_biology.json",
+    "chapters": [
+      {
+        "name": "Cell Biology & Genetics",
+        "cardCount": 84,
+        "deckId": "9575c1d8-4ea5-de52-d325-0ab854870e99"
+      },
+      {
+        "name": "Digestion & Nutrition",
+        "cardCount": 55,
+        "deckId": "b34030e6-8d4b-2f6e-c9c4-e26a5bd8b0ac"
+      },
+      {
+        "name": "Circulatory System",
+        "cardCount": 46,
+        "deckId": "205738b5-1675-81fa-0b86-571da0b57e48"
+      },
+      {
+        "name": "Respiratory System",
+        "cardCount": 38,
+        "deckId": "a3ec3cbe-048a-44b5-161d-1045e9086a62"
+      },
+      {
+        "name": "Nervous & Endocrine Systems",
+        "cardCount": 60,
+        "deckId": "cfa73a87-d0ec-eabb-f716-2f6246867dd6"
+      },
+      {
+        "name": "Excretion & Reproduction",
+        "cardCount": 61,
+        "deckId": "0b2427c0-0f79-935c-4fbe-a6542971352e"
+      },
+      {
+        "name": "Plant Biology",
+        "cardCount": 90,
+        "deckId": "99b3fa58-81ed-f841-ea25-9e06eb708d7a"
+      },
+      {
+        "name": "Microbes, Diseases & Immunity",
+        "cardCount": 76,
+        "deckId": "859b5e1c-60a1-89d3-c64e-b951a1ffecc7"
+      },
+      {
+        "name": "Ecology & Environment",
+        "cardCount": 28,
+        "deckId": "983d4595-fea0-46eb-c206-9aa9f582478a"
+      },
+      {
+        "name": "Classification & Nutrition",
+        "cardCount": 89,
+        "deckId": "6d1825e0-e44e-8dc7-da86-68ea6d093ae6"
+      }
+    ]
+  },
+  {
+    "id": "physics",
+    "name": "Physics",
+    "icon": "atom",
+    "colorHex": "#7B2FBE",
+    "cardCount": 533,
+    "filename": "library_physics.json",
+    "chapters": [
+      {
+        "name": "Mechanics & Motion",
+        "cardCount": 118,
+        "deckId": "3ccbb4ce-0ec8-77ee-5ff1-84638ca1256d"
+      },
+      {
+        "name": "Gravitation & Fluids",
+        "cardCount": 52,
+        "deckId": "4be1fa81-c553-57cb-0e9e-c7b5a05f5a3a"
+      },
+      {
+        "name": "Heat & Thermodynamics",
+        "cardCount": 52,
+        "deckId": "62c070e0-a7c2-a5ca-909b-1447d43f0a1a"
+      },
+      {
+        "name": "Light & Optics",
+        "cardCount": 73,
+        "deckId": "7dd4d8e0-4540-2e11-a2f8-51ec65dadcdc"
+      },
+      {
+        "name": "Sound & Waves",
+        "cardCount": 43,
+        "deckId": "467e4f18-8794-923c-719a-89d3d4033fbf"
+      },
+      {
+        "name": "Electricity & Magnetism",
+        "cardCount": 98,
+        "deckId": "72b83682-6f59-0faf-8bd6-39a579273e43"
+      },
+      {
+        "name": "Modern Physics",
+        "cardCount": 73,
+        "deckId": "d281c211-fb2b-998d-68aa-eaae47049812"
+      },
+      {
+        "name": "Units & Measurements",
+        "cardCount": 24,
+        "deckId": "21c8425e-c46f-1347-ad62-7a77821a7d49"
+      }
+    ]
+  },
+  {
+    "id": "chemistry",
+    "name": "Chemistry",
+    "icon": "flask.fill",
+    "colorHex": "#006D77",
+    "cardCount": 528,
+    "filename": "library_chemistry.json",
+    "chapters": [
+      {
+        "name": "Atomic Structure & Periodic Table",
+        "cardCount": 71,
+        "deckId": "ade29ef1-c8a7-c93d-9a7f-f2474fc2745d"
+      },
+      {
+        "name": "Chemical Bonding & Reactions",
+        "cardCount": 59,
+        "deckId": "8c46b368-b12e-3608-e4ae-5497ac2875ba"
+      },
+      {
+        "name": "Acids, Bases & Solutions",
+        "cardCount": 72,
+        "deckId": "1a5bb677-3aea-8e00-9d7f-fbd9eed08325"
+      },
+      {
+        "name": "Gases & Electrochemistry",
+        "cardCount": 66,
+        "deckId": "e3a7b7d6-ed4b-b896-8fe6-187dc1c5c88f"
+      },
+      {
+        "name": "Metals, Non-metals & Blocks",
+        "cardCount": 115,
+        "deckId": "c8e48190-fd5e-1b2b-1f0b-e3214d619b6f"
+      },
+      {
+        "name": "Organic Chemistry",
+        "cardCount": 74,
+        "deckId": "d65d2353-b309-e340-49b6-b80234a873a2"
+      },
+      {
+        "name": "Applied Chemistry",
+        "cardCount": 56,
+        "deckId": "4befca5c-612a-1e02-ae28-4628b1eedf42"
+      },
+      {
+        "name": "Elements & Mixed",
+        "cardCount": 15,
+        "deckId": "1de4287e-8956-e820-49c4-8d7995f74baf"
+      }
+    ]
+  },
+  {
+    "id": "environment",
+    "name": "Environment & Ecology",
+    "icon": "globe.europe.africa.fill",
+    "colorHex": "#40916C",
+    "cardCount": 237,
+    "filename": "library_environment.json",
+    "chapters": [
+      {
+        "name": "Climate Change & Agreements",
+        "cardCount": 50,
+        "deckId": "1b42f667-0d92-509f-fa32-88b2e8d664d2"
+      },
+      {
+        "name": "Biodiversity & Conservation",
+        "cardCount": 83,
+        "deckId": "7cfc9194-d042-988f-d01a-cffa4de6f921"
+      },
+      {
+        "name": "Pollution & Land",
+        "cardCount": 34,
+        "deckId": "85e3c907-1768-4491-c331-3e4edc50ba1b"
+      },
+      {
+        "name": "Renewable Energy & Disasters",
+        "cardCount": 42,
+        "deckId": "cf7fec3c-db7a-50a0-5f35-2102e051e60e"
+      },
+      {
+        "name": "Laws & Organizations",
+        "cardCount": 28,
+        "deckId": "ce7be16a-d974-5249-919b-be87de80a0ce"
+      }
+    ]
+  },
+  {
+    "id": "general_knowledge",
+    "name": "General Knowledge",
+    "icon": "star.fill",
+    "colorHex": "#E5A020",
+    "cardCount": 673,
+    "filename": "library_general_knowledge.json",
+    "chapters": [
+      {
+        "name": "Awards & Honours",
+        "cardCount": 65,
+        "deckId": "5e898387-5d85-f2fc-1c70-745b588ffc81"
+      },
+      {
+        "name": "Sports & Olympics",
+        "cardCount": 68,
+        "deckId": "176df6f3-c1f8-bcd6-7828-54a0b135c3a9"
+      },
+      {
+        "name": "Art, Culture & Heritage",
+        "cardCount": 213,
+        "deckId": "76ae0485-7d2d-9076-ba78-b25c9227366f"
+      },
+      {
+        "name": "India — States & Symbols",
+        "cardCount": 91,
+        "deckId": "f687055a-d608-adc9-8409-094fab687ca8"
+      },
+      {
+        "name": "India — Infrastructure",
+        "cardCount": 35,
+        "deckId": "ae1b2f75-4fd5-c8f4-b87a-78a0459d30f7"
+      },
+      {
+        "name": "International & Organizations",
+        "cardCount": 80,
+        "deckId": "8f6cefa4-55bf-9e72-5afe-3cefcb2846fd"
+      },
+      {
+        "name": "Science, Tech & Defence",
+        "cardCount": 121,
+        "deckId": "056196f0-2c8a-85ac-fe22-db290e25a9d8"
+      }
+    ]
+  },
+  {
+    "id": "quantitative_aptitude",
+    "name": "Quantitative Aptitude",
+    "icon": "function",
+    "colorHex": "#5A4AE3",
+    "cardCount": 686,
+    "filename": "library_quantitative_aptitude.json",
+    "chapters": [
+      {
+        "name": "Number System",
+        "cardCount": 98,
+        "deckId": "9357959a-195b-8ddb-903d-d2f308c9f392"
+      },
+      {
+        "name": "Percentages & Profit-Loss",
+        "cardCount": 131,
+        "deckId": "83650c47-b63f-d3d5-7297-38683b2282c6"
+      },
+      {
+        "name": "Ratios & Averages",
+        "cardCount": 107,
+        "deckId": "7cc891d1-9079-16b1-ff9d-d5f7a4ce038b"
+      },
+      {
+        "name": "Time, Speed & Distance",
+        "cardCount": 74,
+        "deckId": "175a4aca-977f-ec67-6e0d-800c9f9d6e0e"
+      },
+      {
+        "name": "Time & Work",
+        "cardCount": 51,
+        "deckId": "4f0c88c5-32ef-7bcc-9ef6-bd2a0b4c500f"
+      },
+      {
+        "name": "Simple & Compound Interest",
+        "cardCount": 44,
+        "deckId": "71f4de62-3b1d-2918-a2a6-7897c1343f29"
+      },
+      {
+        "name": "Mensuration & Geometry",
+        "cardCount": 72,
+        "deckId": "64037ff3-31f8-7957-1919-570c115d1b08"
+      },
+      {
+        "name": "Algebra, Probability & Stats",
+        "cardCount": 78,
+        "deckId": "37df3712-1752-52fa-54b1-902bda9cccee"
+      },
+      {
+        "name": "Data Interpretation",
+        "cardCount": 31,
+        "deckId": "179ddc82-8bc5-4fe4-413e-9288e0084032"
+      }
+    ]
+  },
+  {
+    "id": "logical_reasoning",
+    "name": "Logical Reasoning",
+    "icon": "brain.head.profile",
+    "colorHex": "#D63031",
+    "cardCount": 535,
+    "filename": "library_logical_reasoning.json",
+    "chapters": [
+      {
+        "name": "Series & Sequences",
+        "cardCount": 50,
+        "deckId": "13cb701b-98b9-fd19-85bb-d286226fb28e"
+      },
+      {
+        "name": "Analogy & Classification",
+        "cardCount": 37,
+        "deckId": "e467bf2c-1839-a1c2-2c6c-fb1b6eabac26"
+      },
+      {
+        "name": "Coding & Decoding",
+        "cardCount": 33,
+        "deckId": "f379b4a9-b5fe-502c-1f84-51b9cd8859e8"
+      },
+      {
+        "name": "Direction & Ranking",
+        "cardCount": 51,
+        "deckId": "d9df3929-a3b9-3cab-b796-8106f9b135f1"
+      },
+      {
+        "name": "Blood Relations",
+        "cardCount": 42,
+        "deckId": "a0218ea2-8bb9-6809-212c-c12f79e75a66"
+      },
+      {
+        "name": "Seating & Puzzles",
+        "cardCount": 66,
+        "deckId": "ccc7d292-0799-85bd-f44b-d74a7118cfa0"
+      },
+      {
+        "name": "Syllogism & Venn Diagrams",
+        "cardCount": 104,
+        "deckId": "26c5b42e-21f0-0f6c-eb56-015df72e1311"
+      },
+      {
+        "name": "Clocks, Calendars & Dice",
+        "cardCount": 42,
+        "deckId": "edea6c3c-8251-e18f-bb67-786f2deb3d16"
+      },
+      {
+        "name": "Miscellaneous",
+        "cardCount": 110,
+        "deckId": "5fd7e56a-c732-ac17-7ae7-8b491c67e9af"
+      }
+    ]
+  },
+  {
+    "id": "english_language",
+    "name": "English Language",
+    "icon": "text.quote",
+    "colorHex": "#C0392B",
+    "cardCount": 1002,
+    "filename": "library_english_language.json",
+    "chapters": [
+      {
+        "name": "Grammar — Parts of Speech",
+        "cardCount": 114,
+        "deckId": "7a6ade5a-96da-3301-3c49-07a8de6667de"
+      },
+      {
+        "name": "Verb Forms & Tenses",
+        "cardCount": 162,
+        "deckId": "1d4742cb-45b6-2e26-2d6c-fab3899cbff6"
+      },
+      {
+        "name": "Sentence & Error Correction",
+        "cardCount": 129,
+        "deckId": "885659cf-59e8-80ed-81af-612ed8dc3638"
+      },
+      {
+        "name": "Reading Comprehension",
+        "cardCount": 20,
+        "deckId": "9ee50c95-e8cd-5abc-7510-c680f39c7b8a"
+      },
+      {
+        "name": "Idioms & Phrasal Verbs",
+        "cardCount": 89,
+        "deckId": "b565bf08-28a5-404d-d027-0e41006849de"
+      },
+      {
+        "name": "Synonyms & Antonyms",
+        "cardCount": 93,
+        "deckId": "7186fc54-0efc-5ebe-b6dd-80b8f8cfabb6"
+      },
+      {
+        "name": "Word Roots & Word Formation",
+        "cardCount": 197,
+        "deckId": "4d614e2d-cf24-711b-3891-977347f83454"
+      },
+      {
+        "name": "Confusables & Word Usage",
+        "cardCount": 114,
+        "deckId": "66729c74-9623-a5bc-c3f8-c01b5b85d718"
+      },
+      {
+        "name": "Domain Vocabulary",
+        "cardCount": 84,
+        "deckId": "a9efba7e-a01f-f87f-15d3-6b302fb0235f"
+      }
+    ]
+  }
+]

@@ -20,17 +20,26 @@ struct SettingsView: View {
     @AppStorage("dailyReminderEnabled") private var reminderEnabled = false
     @AppStorage("dailyReminderHour") private var reminderHour = 19
     @AppStorage("dailyReminderMinute") private var reminderMinute = 0
+    @AppStorage("dailyReviewGoal") private var dailyReviewGoal = 20
+    @AppStorage("practiceRoundSize") private var practiceRoundSize = PracticeQueue.defaultRoundSize
     @AppStorage("dailyNewCardLimit") private var dailyNewCardLimit = PracticeQueue.defaultDailyNewCardLimit
+    @AppStorage("neverForgetEnabled") private var neverForgetEnabled = false
+    @AppStorage("timedPracticeEnabled") private var timedPracticeEnabled = false
+    @AppStorage("fsrsTargetRetention") private var fsrsTargetRetention = 0.9
+    @AppStorage("claudeAPIKey") private var claudeAPIKey = ""
 
     @State private var reminderTime = Date()
     @State private var permissionDenied = false
-    @State private var autoBackupRefreshTick = 0   // bump to refresh "last backup" label
+    @State private var autoBackupRefreshTick = 0
+    @State private var isWorking = false
+    @State private var claudeKeyDraft = ""
 
     var body: some View {
         NavigationStack {
             Form {
                 librarySection
                 studySection
+                aiSection
                 cloudBackupSection
                 manualBackupSection
                 remindersSection
@@ -87,10 +96,31 @@ struct SettingsView: View {
             } message: {
                 Text("Merge keeps existing decks and updates the rest. Replace deletes all current data first.")
             }
-            .alert("Done", isPresented: .constant(resultMessage != nil), presenting: resultMessage) { _ in
+            .alert("Done", isPresented: Binding(
+                get: { resultMessage != nil },
+                set: { if !$0 { resultMessage = nil } }
+            ), presenting: resultMessage) { _ in
                 Button("OK") { resultMessage = nil }
             } message: { msg in
                 Text(msg)
+            }
+            .overlay {
+                if isWorking {
+                    ZStack {
+                        Color.black.opacity(0.3).ignoresSafeArea()
+                        VStack(spacing: 16) {
+                            ProgressView()
+                                .progressViewStyle(.circular)
+                                .tint(.white)
+                                .scaleEffect(1.4)
+                            Text("Importing…")
+                                .foregroundStyle(.white)
+                                .font(.subheadline.weight(.medium))
+                        }
+                        .padding(32)
+                        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+                    }
+                }
             }
             .onAppear { syncReminderState() }
         }
@@ -100,13 +130,23 @@ struct SettingsView: View {
 
     private var librarySection: some View {
         Section("Library") {
-            LabeledContent("Decks", value: "\(decks.count)")
+            LabeledContent("Decks", value: "\(decks.filter { !$0.isDeleted }.count)")
             LabeledContent("Cards", value: "\(cards.count)")
+            NavigationLink("Recycle Bin") {
+                RecycleBinView(onRestore: { dismiss() })
+            }
         }
     }
 
     private var studySection: some View {
         Section {
+            Stepper(value: $practiceRoundSize, in: 5...100, step: 5) {
+                HStack {
+                    Text("Cards per round")
+                    Spacer()
+                    Text("\(practiceRoundSize)").foregroundStyle(.secondary)
+                }
+            }
             Stepper(value: $dailyNewCardLimit, in: 5...100, step: 5) {
                 HStack {
                     Text("New cards per day")
@@ -114,10 +154,50 @@ struct SettingsView: View {
                     Text("\(dailyNewCardLimit)").foregroundStyle(.secondary)
                 }
             }
+            Stepper(value: $dailyReviewGoal, in: 5...200, step: 5) {
+                HStack {
+                    Text("Daily review goal")
+                    Spacer()
+                    Text("\(dailyReviewGoal)").foregroundStyle(.secondary)
+                }
+            }
+            Toggle(isOn: $neverForgetEnabled) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Never-Forget mode")
+                    Text("Forces all Hard / struggling cards to the front of each session until reviewed today.")
+                        .font(.caption).foregroundStyle(.secondary)
+                }
+            }
+            Toggle(isOn: $timedPracticeEnabled) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Timed practice")
+                    Text("Shows a per-card countdown based on question type. Legal/Verbal: 25s · Factual: 28s · Arithmetic: 50s.")
+                        .font(.caption).foregroundStyle(.secondary)
+                }
+            }
+            VStack(alignment: .leading, spacing: 6) {
+                HStack {
+                    Text("Review depth")
+                    Spacer()
+                    Text(String(format: "%.0f%%", fsrsTargetRetention * 100))
+                        .foregroundStyle(.secondary)
+                        .monospacedDigit()
+                }
+                Slider(value: $fsrsTargetRetention, in: 0.80...0.95, step: 0.01)
+                    .tint(fsrsTargetRetention >= 0.92 ? Theme.stretch :
+                          fsrsTargetRetention >= 0.87 ? .orange : Theme.success)
+                Text(fsrsTargetRetention >= 0.92
+                     ? "Exam mode — maximum retention, more frequent reviews."
+                     : fsrsTargetRetention >= 0.87
+                     ? "Balanced — good for active study periods."
+                     : "Light — fewer reviews, more new cards each day.")
+                    .font(.caption).foregroundStyle(.secondary)
+            }
+            .padding(.vertical, 4)
         } header: {
             Text("Study load")
         } footer: {
-            Text("Caps how many brand-new cards are introduced each day. Lower = more time on what's already partly learned. The cap resets at midnight.")
+            Text("New cards per day: caps how many unseen cards are introduced each day — prevents overload on large decks. Cards per round: limits one session. Daily goal: your total review target.")
         }
     }
 
@@ -163,6 +243,39 @@ struct SettingsView: View {
         }
     }
 
+    private var aiSection: some View {
+        Section {
+            if claudeAPIKey.isEmpty {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Add a Claude API key to use AI card generation inside any deck.")
+                        .font(.caption).foregroundStyle(.secondary)
+                    SecureField("sk-ant-…", text: $claudeKeyDraft)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                    Button("Save key") {
+                        claudeAPIKey = claudeKeyDraft.trimmingCharacters(in: .whitespaces)
+                        claudeKeyDraft = ""
+                    }
+                    .disabled(claudeKeyDraft.trimmingCharacters(in: .whitespaces).isEmpty)
+                }
+                .padding(.vertical, 4)
+            } else {
+                LabeledContent("Claude API key") {
+                    HStack {
+                        Text("••••" + String(claudeAPIKey.suffix(4)))
+                            .foregroundStyle(.secondary).font(.caption)
+                        Button("Clear") { claudeAPIKey = "" }
+                            .font(.caption)
+                    }
+                }
+            }
+        } header: {
+            Text("AI card generation")
+        } footer: {
+            Text("Get a free API key at console.anthropic.com. Used only for generating flashcards on-device — never stored on our servers.")
+        }
+    }
+
     private var manualBackupSection: some View {
         Section {
             Button {
@@ -175,6 +288,7 @@ struct SettingsView: View {
             } label: {
                 Label("Import / Restore from file", systemImage: "square.and.arrow.down")
             }
+            .disabled(isWorking)
         } header: {
             Text("Manual backup")
         } footer: {
@@ -222,14 +336,20 @@ struct SettingsView: View {
     }
 
     private func prepareExport() {
-        do {
-            let backup = try BackupService.snapshot(context: ctx)
-            let data = try BackupService.encode(backup)
-            exportDocument = BackupDocument(data: data)
-            exportFilename = "flashcards-\(stampedFilename()).json"
-            exporting = true
-        } catch {
-            resultMessage = "Could not build backup: \(error.localizedDescription)"
+        isWorking = true
+        Task {
+            defer { isWorking = false }
+            do {
+                let backup = try BackupService.snapshot(context: ctx)
+                let data = try await Task.detached(priority: .userInitiated) {
+                    try BackupService.encode(backup)
+                }.value
+                exportDocument = BackupDocument(data: data)
+                exportFilename = "flashcards-\(stampedFilename()).json"
+                exporting = true
+            } catch {
+                resultMessage = "Could not build backup: \(error.localizedDescription)"
+            }
         }
     }
 
@@ -241,12 +361,24 @@ struct SettingsView: View {
 
     private func runImport(_ mode: BackupService.MergeMode) {
         guard let url = pendingImportURL else { return }
-        defer { pendingImportURL = nil }
-        do {
-            let r = try BackupService.restore(from: url, into: ctx, mode: mode)
-            resultMessage = "Imported \(r.decks) decks · \(r.cards) cards."
-        } catch {
-            resultMessage = "Import failed: \(error.localizedDescription)"
+        pendingImportURL = nil
+        isWorking = true
+        Task {
+            defer { isWorking = false }
+            do {
+                // File I/O + JSON decode off the main thread
+                let backup = try await Task.detached(priority: .userInitiated) {
+                    try BackupService.loadBackupFile(from: url)
+                }.value
+                let container = ctx.container
+                let r = try await Task.detached(priority: .userInitiated) {
+                    let actor = ImportActor(modelContainer: container)
+                    return try await actor.apply(backup: backup, mode: mode)
+                }.value
+                resultMessage = "Imported \(r.decks) decks · \(r.cards) cards."
+            } catch {
+                resultMessage = "Import failed: \(error.localizedDescription)"
+            }
         }
     }
 
@@ -267,7 +399,7 @@ struct SettingsView: View {
 
     private func runAutoBackupNow() {
         do {
-            try AutoBackupService.runBackup(context: ctx)
+            _ = try AutoBackupService.runBackup(context: ctx)
             autoBackupRefreshTick += 1
             resultMessage = "Backed up to your folder."
         } catch {
@@ -319,6 +451,96 @@ struct SettingsView: View {
         reminderMinute = m
         if reminderEnabled {
             await NotificationService.scheduleDailyReminder(hour: h, minute: m)
+        }
+    }
+}
+
+@ModelActor
+private actor ImportActor {
+    func apply(backup: BackupFile, mode: BackupService.MergeMode) throws -> (decks: Int, cards: Int) {
+        let r = try BackupService.applyBackup(backup, into: modelContext, mode: mode)
+        try modelContext.save()
+        return r
+    }
+}
+
+struct RecycleBinView: View {
+    @Environment(\.modelContext) private var ctx
+    let onRestore: () -> Void
+
+    @Query(
+        filter: #Predicate<Deck> { $0.isDeleted == true },
+        sort: \Deck.deletedAt,
+        order: .reverse
+    ) private var deletedDecks: [Deck]
+    
+    var body: some View {
+        List {
+            if deletedDecks.isEmpty {
+                VStack(spacing: 12) {
+                    Spacer()
+                    Image(systemName: "trash")
+                        .font(.system(size: 44)).foregroundStyle(.secondary)
+                    Text("Recycle bin is empty").font(.headline)
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity)
+                .listRowBackground(Color.clear)
+            } else {
+                ForEach(deletedDecks) { deck in
+                    VStack(alignment: .leading, spacing: 10) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(deck.name).font(.headline)
+                            if let date = deck.deletedAt {
+                                let daysLeft = 30 - (Calendar.current.dateComponents([.day], from: date, to: Date()).day ?? 0)
+                                Text("\(max(0, daysLeft)) days left before permanent deletion")
+                                    .font(.caption)
+                                    .foregroundStyle(daysLeft < 5 ? .red : .secondary)
+                            }
+                        }
+                        
+                        HStack(spacing: 16) {
+                            Button {
+                                deck.isDeleted = false
+                                deck.deletedAt = nil
+                                try? ctx.save()
+                                onRestore()
+                            } label: {
+                                Label("Restore", systemImage: "arrow.uturn.backward")
+                                    .font(.subheadline)
+                                    .fontWeight(.medium)
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .tint(.green)
+                            
+                            Button(role: .destructive) {
+                                ctx.delete(deck)
+                                try? ctx.save()
+                            } label: {
+                                Label("Delete Permanently", systemImage: "trash")
+                                    .font(.subheadline)
+                            }
+                            .buttonStyle(.bordered)
+                        }
+                        .padding(.top, 4)
+                    }
+                    .padding(.vertical, 4)
+                }
+            }
+        }
+        .navigationTitle("Recycle Bin")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if !deletedDecks.isEmpty {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Empty Bin", role: .destructive) {
+                        for deck in deletedDecks {
+                            ctx.delete(deck)
+                        }
+                        try? ctx.save()
+                    }
+                }
+            }
         }
     }
 }

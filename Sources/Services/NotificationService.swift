@@ -21,13 +21,17 @@ enum NotificationService {
     }
 
     /// Schedule a daily reminder at `hour:minute`. Replaces any existing daily reminder.
-    static func scheduleDailyReminder(hour: Int, minute: Int) async {
+    /// Pass `dueCount` to show the live card count in the notification body and badge.
+    static func scheduleDailyReminder(hour: Int, minute: Int, dueCount: Int = 0) async {
         await cancelDailyReminder()
 
         let content = UNMutableNotificationContent()
         content.title = "Time to study"
-        content.body  = "Review your flashcards — your due cards are waiting."
+        content.body  = dueCount > 0
+            ? "\(dueCount) card\(dueCount == 1 ? "" : "s") due for review today."
+            : "Keep your streak alive — your flashcards are waiting."
         content.sound = .default
+        content.badge = NSNumber(value: dueCount)
 
         var date = DateComponents()
         date.hour = hour

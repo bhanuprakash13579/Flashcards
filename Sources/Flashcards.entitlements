@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  ENTITLEMENTS — active capabilities only.
+
+  To enable iCloud sync (CloudKit):
+    1. Developer Portal → Identifiers → com.bhanu.flashcards → iCloud
+    2. Create container: iCloud.com.bhanu.flashcards
+    3. Xcode → Signing & Capabilities → + iCloud → enable CloudKit
+    4. Re-add the three keys below:
+         com.apple.developer.icloud-container-identifiers  → iCloud.com.bhanu.flashcards
+         com.apple.developer.icloud-services               → CloudKit
+         com.apple.developer.ubiquity-kvstore-identifier   → $(TeamIdentifierPrefix)com.bhanu.flashcards
+
+  To enable home-screen widget (App Group):
+    1. Developer Portal → Identifiers → + App Group → group.com.flashcards.shared
+    2. Enable it for com.bhanu.flashcards and the widget extension identifier
+    3. Xcode → Signing & Capabilities → + App Groups → group.com.flashcards.shared
+    4. Re-add the key below:
+         com.apple.security.application-groups → group.com.flashcards.shared
+
+  The app works fully without these — CloudKit gracefully degrades to local SwiftData
+  and WidgetDataStore silently skips writes when the App Group is unavailable.
+-->
+<plist version="1.0">
+<dict/>
+</plist>

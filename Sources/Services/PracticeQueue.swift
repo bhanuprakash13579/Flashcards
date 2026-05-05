@@ -6,44 +6,91 @@ enum PracticeQueue {
     /// Maximum cards in one practice round across modes (keeps sessions ~5–10 min).
     static let defaultRoundSize: Int = 20
 
-    /// Default daily new-card cap. Tunable from Settings via @AppStorage("dailyNewCardLimit").
+    /// Maximum brand-new cards introduced per day. Prevents cognitive overload on large decks.
     static let defaultDailyNewCardLimit: Int = 20
+
+    /// Difficulty filter for practice sessions.
+    enum CardFilter: String, CaseIterable, Identifiable {
+        case all       = "All cards"
+        case dueOnly   = "Due only"
+        case struggling = "Struggling"
+        case newOnly   = "New only"
+        case easyOnly  = "Easy cards"
+        case mediumOnly = "Medium cards"
+        case hardOnly  = "Hard cards"
+        case unclassifiedOnly = "Unclassified"
+        var id: String { rawValue }
+    }
 
     /// Build a prioritized round.
     ///
     /// Order rules:
+    /// 0. (when neverForgetEnabled) Hard / struggling cards not yet reviewed today — always first.
     /// 1. Cards already due (`nextReview <= now`) **and not new** — these are the spaced-rep
     ///    reviews that earn long-term retention. Struggling first, then by oldest review.
     /// 2. Brand-new cards (`isNew`) — capped by `dailyNewCardLimit` minus what's already been
     ///    introduced today (so the same 20 cards don't dominate every session).
     /// 3. (only if `onlyDue == false`) Everything else, oldest review first.
-    ///
-    /// The whole point: across multiple sessions in one day, cards already practised today are
-    /// scheduled ≥ 1 day in the future by SM-2, so they naturally drop out of the queue.
-    /// Combined with the new-card cap, every card gets fair rotation rather than the same 50
-    /// reappearing morning-and-evening.
     static func ordered(_ cards: [Card],
                         onlyDue: Bool = true,
-                        dailyNewCardLimit: Int? = nil,
-                        roundSize: Int? = nil) -> [Card] {
-        let now = Date()
+                        roundSize: Int? = nil,
+                        filter: CardFilter = .all,
+                        dailyNewCardLimit: Int = defaultDailyNewCardLimit,
+                        neverForgetEnabled: Bool = false) -> [Card] {
+        // Apply filter first
+        let filtered: [Card]
+        switch filter {
+        case .all:
+            filtered = cards
+        case .dueOnly:
+            let now = Date()
+            filtered = cards.filter { $0.nextReview <= now }
+        case .struggling:
+            filtered = cards.filter { $0.isStruggling }
+        case .newOnly:
+            filtered = cards.filter { $0.isNew }
+        case .easyOnly:
+            filtered = cards.filter { $0.userDifficulty == 1 }
+        case .mediumOnly:
+            filtered = cards.filter { $0.userDifficulty == 2 }
+        case .hardOnly:
+            filtered = cards.filter { $0.userDifficulty == 3 }
+        case .unclassifiedOnly:
+            filtered = cards.filter { $0.userDifficulty == 0 }
+        }
 
-        let dueReviews = cards
-            .filter { !$0.isNew && $0.nextReview <= now }
+        let now = Date()
+        let todayStart = Calendar.current.startOfDay(for: now)
+
+        // Never-Forget bucket: Hard/struggling cards not yet seen today → always at front.
+        let neverForgetCards: [Card]
+        if neverForgetEnabled {
+            neverForgetCards = filtered
+                .filter { ($0.userDifficulty == 3 || $0.isStruggling) && !$0.isNew }
+                .filter { ($0.lastReviewed ?? .distantPast) < todayStart }
+                .sorted(by: reviewPriority)
+        } else {
+            neverForgetCards = []
+        }
+        let neverForgetIDs = Set(neverForgetCards.map(\.id))
+
+        let dueReviews = filtered
+            .filter { !$0.isNew && $0.nextReview <= now && !neverForgetIDs.contains($0.id) }
             .sorted(by: reviewPriority)
 
-        let cap = dailyNewCardLimit ?? defaultDailyNewCardLimit
-        let alreadyIntroduced = StudyHistory.newCardsIntroducedToday()
-        let remainingNewSlots = max(0, cap - alreadyIntroduced)
-        let newPool = cards.filter { $0.isNew }.shuffled()
-        let newCards = Array(newPool.prefix(remainingNewSlots))
+        let alreadyIntroducedToday = StudyHistory.newCardsIntroducedToday()
+        let remainingNewSlots = max(0, dailyNewCardLimit - alreadyIntroducedToday)
+        let allNewCards = filtered.filter { $0.isNew }.shuffled()
+        let newCards = Array(allNewCards.prefix(remainingNewSlots))
+        // IDs of new cards beyond today's cap — must never enter via the leftovers bucket.
+        let overCapNewIDs = Set(allNewCards.dropFirst(remainingNewSlots).map(\.id))
 
-        var queue = dueReviews + newCards
+        var queue = neverForgetCards + dueReviews + newCards
 
         if !onlyDue {
             let used = Set(queue.map(\.id))
-            let leftovers = cards
-                .filter { !used.contains($0.id) }
+            let leftovers = filtered
+                .filter { !used.contains($0.id) && !overCapNewIDs.contains($0.id) }
                 .sorted { ($0.lastReviewed ?? .distantPast) < ($1.lastReviewed ?? .distantPast) }
             queue.append(contentsOf: leftovers)
         }
@@ -51,6 +98,8 @@ enum PracticeQueue {
         if let n = roundSize {
             queue = Array(queue.prefix(n))
         }
+        // Preserve priority order: only shuffle within equal-priority groups.
+        // Struggling due reviews stay at front; new cards (already shuffled) follow.
         return queue
     }
 
@@ -85,8 +134,8 @@ enum PracticeQueue {
 
         // Shuffle within the top portion of same-type to vary across rounds,
         // then pad with different-type only when same-type runs out.
-        var topSame = Array(sameType.prefix(max(n * 2, 6))).map(\.0).shuffled()
-        var topDiff = Array(diffType.prefix(max(n * 2, 6))).map(\.0).shuffled()
+        let topSame = Array(sameType.prefix(max(n * 2, 6))).map(\.0).shuffled()
+        let topDiff = Array(diffType.prefix(max(n * 2, 6))).map(\.0).shuffled()
 
         var out: [String] = []
         var used = seen
@@ -150,7 +199,7 @@ enum PracticeQueue {
     }
 
     /// Count cards that should appear today across both buckets, given the cap.
-    static func dueOrNewToday(_ cards: [Card], dailyNewCardLimit: Int? = nil) -> Int {
-        ordered(cards, onlyDue: true, dailyNewCardLimit: dailyNewCardLimit, roundSize: nil).count
+    static func dueOrNewToday(_ cards: [Card]) -> Int {
+        ordered(cards, onlyDue: true, roundSize: nil).count
     }
 }

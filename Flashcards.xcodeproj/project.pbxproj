@@ -1,0 +1,604 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CC0000000000000000000002 /* FlashcardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000002 /* FlashcardsApp.swift */; };
+		CC0000000000000000000003 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000003 /* Card.swift */; };
+		CC0000000000000000000004 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000004 /* Deck.swift */; };
+		CC0000000000000000000005 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000005 /* AppTheme.swift */; };
+		CC0000000000000000000006 /* BulkImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000006 /* BulkImportView.swift */; };
+		CC0000000000000000000007 /* CardEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000007 /* CardEditorView.swift */; };
+		CC0000000000000000000008 /* ColorHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000008 /* ColorHex.swift */; };
+		CC0000000000000000000009 /* DeckDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000009 /* DeckDetailView.swift */; };
+		CC000000000000000000000A /* DecksListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000000A /* DecksListView.swift */; };
+		CC000000000000000000000B /* Encouragement.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000000B /* Encouragement.swift */; };
+		CC000000000000000000000C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000000C /* SettingsView.swift */; };
+		CC000000000000000000000D /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000000D /* StatsView.swift */; };
+		CC000000000000000000000E /* StudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000000E /* StudyView.swift */; };
+		CC000000000000000000000F /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000000F /* MatchView.swift */; };
+		CC0000000000000000000010 /* MultipleChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000010 /* MultipleChoiceView.swift */; };
+		CC0000000000000000000011 /* PracticeHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000011 /* PracticeHub.swift */; };
+		CC0000000000000000000012 /* WrittenReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000012 /* WrittenReviewView.swift */; };
+		CC0000000000000000000013 /* AutoBackupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000013 /* AutoBackupService.swift */; };
+		CC0000000000000000000014 /* BackupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000014 /* BackupService.swift */; };
+		CC0000000000000000000015 /* ImageCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000015 /* ImageCompressor.swift */; };
+		CC0000000000000000000016 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000016 /* NotificationService.swift */; };
+		CC0000000000000000000017 /* PracticeQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000017 /* PracticeQueue.swift */; };
+		CC0000000000000000000018 /* SpacedRepetition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000018 /* SpacedRepetition.swift */; };
+		CC0000000000000000000019 /* StudyHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000019 /* StudyHistory.swift */; };
+		CC000000000000000000001B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000001B /* Assets.xcassets */; };
+		CC000000000000000000001C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000001C /* PrivacyInfo.xcprivacy */; };
+		CC000000000000000000001D /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000001D /* Tag.swift */; };
+		CC000000000000000000001E /* DeckEditorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000001E /* DeckEditorSheet.swift */; };
+		CC000000000000000000001F /* AICardGeneratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000001F /* AICardGeneratorView.swift */; };
+		CC0000000000000000000020 /* ClaudeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000020 /* ClaudeService.swift */; };
+		CC0000000000000000000021 /* FormatGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000021 /* FormatGuideView.swift */; };
+		CC0000000000000000000022 /* CSVExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000022 /* CSVExportService.swift */; };
+		CC0000000000000000000023 /* TextMCQAnswerPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000023 /* TextMCQAnswerPickerView.swift */; };
+		CC0000000000000000000024 /* ExamSimulatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000024 /* ExamSimulatorView.swift */; };
+		CC0000000000000000000025 /* WidgetDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000025 /* WidgetDataStore.swift */; };
+		CC0000000000000000000026 /* FSRS.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000026 /* FSRS.swift */; };
+		CC0000000000000000000027 /* HapticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000027 /* HapticService.swift */; };
+		CC0000000000000000000029 /* TTSService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000029 /* TTSService.swift */; };
+		CC000000000000000000002A /* SpotlightService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000002A /* SpotlightService.swift */; };
+		CC000000000000000000002B /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000002B /* OnboardingView.swift */; };
+		CC000000000000000000002C /* LibraryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000002C /* LibraryService.swift */; };
+		CC000000000000000000002D /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000002D /* LibraryView.swift */; };
+		CC000000000000000000002E /* library_manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000002E /* library_manifest.json */; };
+		CC000000000000000000002F /* library_biology.json in Resources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000002F /* library_biology.json */; };
+		CC0000000000000000000030 /* library_chemistry.json in Resources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000030 /* library_chemistry.json */; };
+		CC0000000000000000000031 /* library_english_language.json in Resources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000031 /* library_english_language.json */; };
+		CC0000000000000000000032 /* library_environment.json in Resources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000032 /* library_environment.json */; };
+		CC0000000000000000000033 /* library_general_knowledge.json in Resources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000033 /* library_general_knowledge.json */; };
+		CC0000000000000000000034 /* library_indian_economy.json in Resources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000034 /* library_indian_economy.json */; };
+		CC0000000000000000000035 /* library_indian_geography.json in Resources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000035 /* library_indian_geography.json */; };
+		CC0000000000000000000036 /* library_indian_history.json in Resources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000036 /* library_indian_history.json */; };
+		CC0000000000000000000037 /* library_indian_polity.json in Resources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000037 /* library_indian_polity.json */; };
+		CC0000000000000000000038 /* library_logical_reasoning.json in Resources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000038 /* library_logical_reasoning.json */; };
+		CC0000000000000000000039 /* library_physics.json in Resources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000039 /* library_physics.json */; };
+		CC000000000000000000003A /* library_quantitative_aptitude.json in Resources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000003A /* library_quantitative_aptitude.json */; };
+		CC000000000000000000003B /* CalibrationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000003B /* CalibrationStore.swift */; };
+		CC000000000000000000003C /* MixedStudySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000003C /* MixedStudySheet.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AA0000000000000000000003 /* Flashcards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flashcards.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB0000000000000000000002 /* FlashcardsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsApp.swift; sourceTree = "<group>"; };
+		BB0000000000000000000003 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		BB0000000000000000000004 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
+		BB0000000000000000000005 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		BB0000000000000000000006 /* BulkImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulkImportView.swift; sourceTree = "<group>"; };
+		BB0000000000000000000007 /* CardEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardEditorView.swift; sourceTree = "<group>"; };
+		BB0000000000000000000008 /* ColorHex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHex.swift; sourceTree = "<group>"; };
+		BB0000000000000000000009 /* DeckDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckDetailView.swift; sourceTree = "<group>"; };
+		BB000000000000000000000A /* DecksListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecksListView.swift; sourceTree = "<group>"; };
+		BB000000000000000000000B /* Encouragement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encouragement.swift; sourceTree = "<group>"; };
+		BB000000000000000000000C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		BB000000000000000000000D /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		BB000000000000000000000E /* StudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyView.swift; sourceTree = "<group>"; };
+		BB000000000000000000000F /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
+		BB0000000000000000000010 /* MultipleChoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceView.swift; sourceTree = "<group>"; };
+		BB0000000000000000000011 /* PracticeHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeHub.swift; sourceTree = "<group>"; };
+		BB0000000000000000000012 /* WrittenReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrittenReviewView.swift; sourceTree = "<group>"; };
+		BB0000000000000000000013 /* AutoBackupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoBackupService.swift; sourceTree = "<group>"; };
+		BB0000000000000000000014 /* BackupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupService.swift; sourceTree = "<group>"; };
+		BB0000000000000000000015 /* ImageCompressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCompressor.swift; sourceTree = "<group>"; };
+		BB0000000000000000000016 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		BB0000000000000000000017 /* PracticeQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeQueue.swift; sourceTree = "<group>"; };
+		BB0000000000000000000018 /* SpacedRepetition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacedRepetition.swift; sourceTree = "<group>"; };
+		BB0000000000000000000019 /* StudyHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyHistory.swift; sourceTree = "<group>"; };
+		BB000000000000000000001A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB000000000000000000001B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BB000000000000000000001C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		BB000000000000000000001D /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		BB000000000000000000001E /* DeckEditorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckEditorSheet.swift; sourceTree = "<group>"; };
+		BB000000000000000000001F /* AICardGeneratorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICardGeneratorView.swift; sourceTree = "<group>"; };
+		BB0000000000000000000020 /* ClaudeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeService.swift; sourceTree = "<group>"; };
+		BB0000000000000000000021 /* FormatGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatGuideView.swift; sourceTree = "<group>"; };
+		BB0000000000000000000022 /* CSVExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVExportService.swift; sourceTree = "<group>"; };
+		BB0000000000000000000023 /* TextMCQAnswerPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMCQAnswerPickerView.swift; sourceTree = "<group>"; };
+		BB0000000000000000000024 /* ExamSimulatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamSimulatorView.swift; sourceTree = "<group>"; };
+		BB0000000000000000000025 /* WidgetDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetDataStore.swift; sourceTree = "<group>"; };
+		BB0000000000000000000026 /* FSRS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSRS.swift; sourceTree = "<group>"; };
+		BB0000000000000000000027 /* HapticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticService.swift; sourceTree = "<group>"; };
+		BB0000000000000000000028 /* Flashcards.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flashcards.entitlements; sourceTree = "<group>"; };
+		BB0000000000000000000029 /* TTSService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTSService.swift; sourceTree = "<group>"; };
+		BB000000000000000000002A /* SpotlightService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightService.swift; sourceTree = "<group>"; };
+		BB000000000000000000002B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		BB000000000000000000002C /* LibraryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryService.swift; sourceTree = "<group>"; };
+		BB000000000000000000002D /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		BB000000000000000000002E /* library_manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = library_manifest.json; sourceTree = "<group>"; };
+		BB000000000000000000002F /* library_biology.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = library_biology.json; sourceTree = "<group>"; };
+		BB0000000000000000000030 /* library_chemistry.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = library_chemistry.json; sourceTree = "<group>"; };
+		BB0000000000000000000031 /* library_english_language.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = library_english_language.json; sourceTree = "<group>"; };
+		BB0000000000000000000032 /* library_environment.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = library_environment.json; sourceTree = "<group>"; };
+		BB0000000000000000000033 /* library_general_knowledge.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = library_general_knowledge.json; sourceTree = "<group>"; };
+		BB0000000000000000000034 /* library_indian_economy.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = library_indian_economy.json; sourceTree = "<group>"; };
+		BB0000000000000000000035 /* library_indian_geography.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = library_indian_geography.json; sourceTree = "<group>"; };
+		BB0000000000000000000036 /* library_indian_history.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = library_indian_history.json; sourceTree = "<group>"; };
+		BB0000000000000000000037 /* library_indian_polity.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = library_indian_polity.json; sourceTree = "<group>"; };
+		BB0000000000000000000038 /* library_logical_reasoning.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = library_logical_reasoning.json; sourceTree = "<group>"; };
+		BB0000000000000000000039 /* library_physics.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = library_physics.json; sourceTree = "<group>"; };
+		BB000000000000000000003A /* library_quantitative_aptitude.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = library_quantitative_aptitude.json; sourceTree = "<group>"; };
+		BB000000000000000000003B /* CalibrationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationStore.swift; sourceTree = "<group>"; };
+		BB000000000000000000003C /* MixedStudySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixedStudySheet.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AA000000000000000000000E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AA0000000000000000000004 = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000005 /* Sources */,
+				AA000000000000000000000B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000005 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				BB0000000000000000000002 /* FlashcardsApp.swift */,
+				AA0000000000000000000006 /* Models */,
+				AA0000000000000000000007 /* Views */,
+				AA0000000000000000000009 /* Services */,
+				AA000000000000000000000A /* Resources */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000006 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BB0000000000000000000003 /* Card.swift */,
+				BB0000000000000000000004 /* Deck.swift */,
+				BB000000000000000000001D /* Tag.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000007 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BB0000000000000000000005 /* AppTheme.swift */,
+				BB000000000000000000001F /* AICardGeneratorView.swift */,
+				BB0000000000000000000006 /* BulkImportView.swift */,
+				BB0000000000000000000021 /* FormatGuideView.swift */,
+				BB0000000000000000000023 /* TextMCQAnswerPickerView.swift */,
+				BB0000000000000000000007 /* CardEditorView.swift */,
+				BB0000000000000000000008 /* ColorHex.swift */,
+				BB0000000000000000000009 /* DeckDetailView.swift */,
+				BB000000000000000000001E /* DeckEditorSheet.swift */,
+				BB000000000000000000000A /* DecksListView.swift */,
+				BB000000000000000000000B /* Encouragement.swift */,
+				BB000000000000000000000C /* SettingsView.swift */,
+				BB000000000000000000000D /* StatsView.swift */,
+				BB000000000000000000000E /* StudyView.swift */,
+				BB000000000000000000002B /* OnboardingView.swift */,
+				BB000000000000000000002D /* LibraryView.swift */,
+				BB000000000000000000003C /* MixedStudySheet.swift */,
+				AA0000000000000000000008 /* Practice */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000008 /* Practice */ = {
+			isa = PBXGroup;
+			children = (
+				BB000000000000000000000F /* MatchView.swift */,
+				BB0000000000000000000010 /* MultipleChoiceView.swift */,
+				BB0000000000000000000011 /* PracticeHub.swift */,
+				BB0000000000000000000012 /* WrittenReviewView.swift */,
+				BB0000000000000000000024 /* ExamSimulatorView.swift */,
+			);
+			path = Practice;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000009 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				BB0000000000000000000013 /* AutoBackupService.swift */,
+				BB0000000000000000000014 /* BackupService.swift */,
+				BB0000000000000000000020 /* ClaudeService.swift */,
+				BB0000000000000000000022 /* CSVExportService.swift */,
+				BB0000000000000000000015 /* ImageCompressor.swift */,
+				BB0000000000000000000016 /* NotificationService.swift */,
+				BB0000000000000000000017 /* PracticeQueue.swift */,
+				BB0000000000000000000018 /* SpacedRepetition.swift */,
+				BB0000000000000000000019 /* StudyHistory.swift */,
+				BB0000000000000000000025 /* WidgetDataStore.swift */,
+				BB0000000000000000000026 /* FSRS.swift */,
+				BB0000000000000000000027 /* HapticService.swift */,
+				BB0000000000000000000029 /* TTSService.swift */,
+				BB000000000000000000002A /* SpotlightService.swift */,
+				BB000000000000000000002C /* LibraryService.swift */,
+				BB000000000000000000003B /* CalibrationStore.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		AA000000000000000000000A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BB000000000000000000001A /* Info.plist */,
+				BB000000000000000000001B /* Assets.xcassets */,
+				BB000000000000000000001C /* PrivacyInfo.xcprivacy */,
+				BB0000000000000000000028 /* Flashcards.entitlements */,
+				AA0000000000000000000040 /* Library */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		AA000000000000000000000B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000003 /* Flashcards.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000040 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				BB000000000000000000002E /* library_manifest.json */,
+				BB000000000000000000002F /* library_biology.json */,
+				BB0000000000000000000030 /* library_chemistry.json */,
+				BB0000000000000000000031 /* library_english_language.json */,
+				BB0000000000000000000032 /* library_environment.json */,
+				BB0000000000000000000033 /* library_general_knowledge.json */,
+				BB0000000000000000000034 /* library_indian_economy.json */,
+				BB0000000000000000000035 /* library_indian_geography.json */,
+				BB0000000000000000000036 /* library_indian_history.json */,
+				BB0000000000000000000037 /* library_indian_polity.json */,
+				BB0000000000000000000038 /* library_logical_reasoning.json */,
+				BB0000000000000000000039 /* library_physics.json */,
+				BB000000000000000000003A /* library_quantitative_aptitude.json */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AA0000000000000000000002 /* Flashcards */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA0000000000000000000010 /* Build configuration list for PBXNativeTarget "Flashcards" */;
+			buildPhases = (
+				AA000000000000000000000C /* Sources */,
+				AA000000000000000000000D /* Resources */,
+				AA000000000000000000000E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Flashcards;
+			productName = Flashcards;
+			productReference = AA0000000000000000000003 /* Flashcards.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AA0000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					AA0000000000000000000002 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = AA000000000000000000000F /* Build configuration list for PBXProject "Flashcards" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AA0000000000000000000004;
+			productRefGroup = AA000000000000000000000B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AA0000000000000000000002 /* Flashcards */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AA000000000000000000000D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC000000000000000000001B /* Assets.xcassets in Resources */,
+				CC000000000000000000001C /* PrivacyInfo.xcprivacy in Resources */,
+				CC000000000000000000002E /* library_manifest.json in Resources */,
+				CC000000000000000000002F /* library_biology.json in Resources */,
+				CC0000000000000000000030 /* library_chemistry.json in Resources */,
+				CC0000000000000000000031 /* library_english_language.json in Resources */,
+				CC0000000000000000000032 /* library_environment.json in Resources */,
+				CC0000000000000000000033 /* library_general_knowledge.json in Resources */,
+				CC0000000000000000000034 /* library_indian_economy.json in Resources */,
+				CC0000000000000000000035 /* library_indian_geography.json in Resources */,
+				CC0000000000000000000036 /* library_indian_history.json in Resources */,
+				CC0000000000000000000037 /* library_indian_polity.json in Resources */,
+				CC0000000000000000000038 /* library_logical_reasoning.json in Resources */,
+				CC0000000000000000000039 /* library_physics.json in Resources */,
+				CC000000000000000000003A /* library_quantitative_aptitude.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AA000000000000000000000C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC0000000000000000000002 /* FlashcardsApp.swift in Sources */,
+				CC0000000000000000000003 /* Card.swift in Sources */,
+				CC0000000000000000000004 /* Deck.swift in Sources */,
+				CC000000000000000000001D /* Tag.swift in Sources */,
+				CC0000000000000000000005 /* AppTheme.swift in Sources */,
+				CC000000000000000000001F /* AICardGeneratorView.swift in Sources */,
+				CC0000000000000000000006 /* BulkImportView.swift in Sources */,
+				CC0000000000000000000007 /* CardEditorView.swift in Sources */,
+				CC0000000000000000000008 /* ColorHex.swift in Sources */,
+				CC0000000000000000000009 /* DeckDetailView.swift in Sources */,
+				CC000000000000000000001E /* DeckEditorSheet.swift in Sources */,
+				CC000000000000000000000A /* DecksListView.swift in Sources */,
+				CC000000000000000000000B /* Encouragement.swift in Sources */,
+				CC000000000000000000000C /* SettingsView.swift in Sources */,
+				CC000000000000000000000D /* StatsView.swift in Sources */,
+				CC000000000000000000000E /* StudyView.swift in Sources */,
+				CC000000000000000000000F /* MatchView.swift in Sources */,
+				CC0000000000000000000010 /* MultipleChoiceView.swift in Sources */,
+				CC0000000000000000000011 /* PracticeHub.swift in Sources */,
+				CC0000000000000000000012 /* WrittenReviewView.swift in Sources */,
+				CC0000000000000000000013 /* AutoBackupService.swift in Sources */,
+				CC0000000000000000000014 /* BackupService.swift in Sources */,
+				CC0000000000000000000020 /* ClaudeService.swift in Sources */,
+				CC0000000000000000000021 /* FormatGuideView.swift in Sources */,
+				CC0000000000000000000022 /* CSVExportService.swift in Sources */,
+				CC0000000000000000000023 /* TextMCQAnswerPickerView.swift in Sources */,
+				CC0000000000000000000024 /* ExamSimulatorView.swift in Sources */,
+				CC0000000000000000000025 /* WidgetDataStore.swift in Sources */,
+				CC0000000000000000000026 /* FSRS.swift in Sources */,
+				CC0000000000000000000027 /* HapticService.swift in Sources */,
+				CC0000000000000000000029 /* TTSService.swift in Sources */,
+				CC000000000000000000002A /* SpotlightService.swift in Sources */,
+				CC000000000000000000002B /* OnboardingView.swift in Sources */,
+				CC0000000000000000000015 /* ImageCompressor.swift in Sources */,
+				CC0000000000000000000016 /* NotificationService.swift in Sources */,
+				CC0000000000000000000017 /* PracticeQueue.swift in Sources */,
+				CC0000000000000000000018 /* SpacedRepetition.swift in Sources */,
+				CC0000000000000000000019 /* StudyHistory.swift in Sources */,
+				CC000000000000000000002C /* LibraryService.swift in Sources */,
+				CC000000000000000000002D /* LibraryView.swift in Sources */,
+				CC000000000000000000003B /* CalibrationStore.swift in Sources */,
+				CC000000000000000000003C /* MixedStudySheet.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AA0000000000000000000011 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_CYCLE = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AA0000000000000000000012 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_CYCLE = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AA0000000000000000000013 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Sources/Flashcards.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LKX8YX9LKC;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Sources/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Flashcards;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bhanu.flashcards;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AA0000000000000000000014 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Sources/Flashcards.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LKX8YX9LKC;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Sources/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Flashcards;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bhanu.flashcards;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA000000000000000000000F /* Build configuration list for PBXProject "Flashcards" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA0000000000000000000011 /* Debug */,
+				AA0000000000000000000012 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA0000000000000000000010 /* Build configuration list for PBXNativeTarget "Flashcards" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA0000000000000000000013 /* Debug */,
+				AA0000000000000000000014 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AA0000000000000000000001 /* Project object */;
+}

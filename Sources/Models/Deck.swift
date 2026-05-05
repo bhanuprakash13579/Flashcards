@@ -3,11 +3,16 @@ import SwiftData
 
 @Model
 final class Deck {
-    @Attribute(.unique) var id: UUID
+    var id: UUID  // unique by UUID generation; @Attribute(.unique) omitted for CloudKit compat
     var name: String
     var colorHex: String
     var createdAt: Date
     @Relationship(deleteRule: .cascade, inverse: \Card.deck) var cards: [Card]
+    var tags: [Tag] = []
+    var isPinned: Bool = false
+    var sortOrder: Int = 0
+    var isDeleted: Bool = false
+    var deletedAt: Date? = nil
 
     init(name: String, colorHex: String = "#4F8EF7") {
         self.id = UUID()

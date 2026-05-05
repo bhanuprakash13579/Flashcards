@@ -2,6 +2,10 @@ import SwiftUI
 import SwiftData
 import PhotosUI
 
+private extension String {
+    var nonEmptyOrNil: String? { isEmpty ? nil : self }
+}
+
 struct CardEditorView: View {
     let deck: Deck
     let card: Card?
@@ -15,6 +19,12 @@ struct CardEditorView: View {
     @State private var backImageData: Data?
     @State private var frontPick: PhotosPickerItem?
     @State private var backPick: PhotosPickerItem?
+    @State private var option1 = ""
+    @State private var option2 = ""
+    @State private var option3 = ""
+    @State private var explanation = ""
+    @State private var showMCQOptions = false
+    @State private var userDifficulty = 0
 
     @FocusState private var focus: Field?
     private enum Field { case front, back }
@@ -58,6 +68,18 @@ struct CardEditorView: View {
                     Text("Back")
                 }
 
+                Section {
+                    TextField("Explanation context or rationale", text: $explanation, axis: .vertical)
+                        .lineLimit(2...6)
+                } header: {
+                    Text("Explanation (Optional)")
+                } footer: {
+                    Text("This text will display beautifully below the card after you answer.")
+                }
+
+                difficultySection
+                mcqSection
+
                 if !isEditing {
                     Section {
                         Button("Save & add another") { save(stayOpen: true) }
@@ -83,6 +105,41 @@ struct CardEditorView: View {
             .onChange(of: backPick) { _, item in
                 Task { backImageData = await loadCompressed(item) }
             }
+        }
+    }
+
+    private var difficultySection: some View {
+        Section {
+            Picker("Classification", selection: $userDifficulty) {
+                Text("Unclassified").tag(0)
+                Text("Easy").tag(1)
+                Text("Medium").tag(2)
+                Text("Hard").tag(3)
+            }
+        } header: {
+            Text("Difficulty")
+        } footer: {
+            Text("Tag cards to easily filter them during practice.")
+        }
+    }
+
+    private var mcqSection: some View {
+        Section {
+            Toggle("Add MCQ wrong options", isOn: $showMCQOptions)
+            if showMCQOptions {
+                TextField("Wrong option 1", text: $option1, axis: .vertical)
+                    .lineLimit(1...3)
+                TextField("Wrong option 2", text: $option2, axis: .vertical)
+                    .lineLimit(1...3)
+                TextField("Wrong option 3 (optional)", text: $option3, axis: .vertical)
+                    .lineLimit(1...3)
+            }
+        } header: {
+            Text("Multiple choice options")
+        } footer: {
+            showMCQOptions
+                ? Text("The correct answer is the Back field. Add 1–3 wrong options here; the practice mode will use them instead of randomly picking distractors.")
+                : Text("Enable to set specific wrong answers shown during MCQ practice. Leave off to auto-generate distractors from other cards.")
         }
     }
 
@@ -131,6 +188,12 @@ struct CardEditorView: View {
             back = c.back
             frontImageData = c.frontImageData
             backImageData = c.backImageData
+            option1 = c.option1 ?? ""
+            option2 = c.option2 ?? ""
+            option3 = c.option3 ?? ""
+            explanation = c.storedExplanation ?? ""
+            showMCQOptions = c.option1 != nil || c.option2 != nil
+            userDifficulty = c.userDifficulty
         }
         focus = .front
     }
@@ -140,17 +203,33 @@ struct CardEditorView: View {
         let b = back.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !f.isEmpty, !b.isEmpty else { return }
 
+        let o1 = showMCQOptions ? option1.trimmingCharacters(in: .whitespacesAndNewlines).nonEmptyOrNil : nil
+        let o2 = showMCQOptions ? option2.trimmingCharacters(in: .whitespacesAndNewlines).nonEmptyOrNil : nil
+        let o3 = showMCQOptions ? option3.trimmingCharacters(in: .whitespacesAndNewlines).nonEmptyOrNil : nil
+        let expl = explanation.trimmingCharacters(in: .whitespacesAndNewlines).nonEmptyOrNil
+
         if let card {
             card.front = f
             card.back = b
             card.frontImageData = frontImageData
             card.backImageData = backImageData
+            card.option1 = o1
+            card.option2 = o2
+            card.option3 = o3
+            card.storedExplanation = expl
+            card.userDifficulty = userDifficulty
         } else {
             let new = Card(front: f, back: b, deck: deck)
             new.frontImageData = frontImageData
             new.backImageData = backImageData
+            new.option1 = o1
+            new.option2 = o2
+            new.option3 = o3
+            new.storedExplanation = expl
+            new.userDifficulty = userDifficulty
             ctx.insert(new)
         }
+        try? ctx.save()
 
         if stayOpen {
             front = ""
@@ -159,6 +238,11 @@ struct CardEditorView: View {
             backImageData = nil
             frontPick = nil
             backPick = nil
+            option1 = ""
+            option2 = ""
+            option3 = ""
+            explanation = ""
+            userDifficulty = 0
             focus = .front
         } else {
             dismiss()

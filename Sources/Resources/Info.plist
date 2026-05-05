@@ -6,6 +6,8 @@
     <string>en</string>
     <key>CFBundleDisplayName</key>
     <string>Flashcards</string>
+    <key>CFBundleIconName</key>
+    <string>AppIcon</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
@@ -22,6 +24,8 @@
     <string>1</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
+    <key>LSSupportsOpeningDocumentsInPlace</key>
+    <false/>
     <key>UILaunchScreen</key>
     <dict/>
     <key>UISupportedInterfaceOrientations</key>
@@ -40,6 +44,10 @@
         <key>UIApplicationSupportsMultipleScenes</key>
         <false/>
     </dict>
+    <key>NSUserActivityTypes</key>
+    <array>
+        <string>com.bhanu.flashcards.review</string>
+    </array>
     <key>CFBundleDocumentTypes</key>
     <array>
         <dict>

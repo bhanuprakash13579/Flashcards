@@ -3,8 +3,12 @@ import SwiftData
 
 struct MultipleChoiceView: View {
     let deck: Deck
+    var cards: [Card]? = nil
+    var cardFilter: PracticeQueue.CardFilter = .all
     @Environment(\.dismiss) private var dismiss
+    @AppStorage("practiceRoundSize") private var practiceRoundSize = PracticeQueue.defaultRoundSize
     @AppStorage("dailyNewCardLimit") private var dailyNewCardLimit = PracticeQueue.defaultDailyNewCardLimit
+    @AppStorage("neverForgetEnabled") private var neverForgetEnabled = false
 
     @State private var queue: [Card] = []
     @State private var index = 0
@@ -14,6 +18,8 @@ struct MultipleChoiceView: View {
     @State private var picked: String?
     @State private var rightCount = 0
     @State private var wrongCount = 0
+    @State private var requeuePile: [Card] = []
+    @State private var isRepass = false
 
     var body: some View {
         Group {
@@ -31,25 +37,32 @@ struct MultipleChoiceView: View {
     }
 
     private func loadQueue() {
-        guard deck.cards.count >= 4 else { return }
+        let source = cards ?? deck.cards
+        guard source.count >= 4 else { return }
         var q = PracticeQueue.ordered(
-            deck.cards,
+            source,
             onlyDue: true,
+            roundSize: practiceRoundSize,
+            filter: cardFilter,
             dailyNewCardLimit: dailyNewCardLimit,
-            roundSize: PracticeQueue.defaultRoundSize
+            neverForgetEnabled: neverForgetEnabled
         )
         if q.isEmpty {
             q = PracticeQueue.ordered(
-                deck.cards,
+                source,
                 onlyDue: false,
+                roundSize: practiceRoundSize,
+                filter: cardFilter,
                 dailyNewCardLimit: dailyNewCardLimit,
-                roundSize: PracticeQueue.defaultRoundSize
+                neverForgetEnabled: neverForgetEnabled
             )
         }
         queue = q
         index = 0
         rightCount = 0
         wrongCount = 0
+        requeuePile = []
+        isRepass = false
         prepareCurrent()
     }
 
@@ -57,16 +70,21 @@ struct MultipleChoiceView: View {
         guard index < queue.count else { return }
         let card = queue[index]
 
-        if let parsed = parseEmbeddedOptions(card) {
-            // Card already has (A)-(D) — use them directly
+        if let stored = card.storedMCQOptions {
+            // Explicit wrong options stored on the card
+            displayQuestion = card.front
+            correctAnswer = card.cleanMCQAnswer
+            options = stored
+        } else if let parsed = parseEmbeddedOptions(card) {
+            // Card has (A)-(D) embedded in front text
             displayQuestion = parsed.question
             correctAnswer = parsed.correct
             options = parsed.options.shuffled()
         } else {
-            // Plain Q&A card — build distractors from other cards' backs
+            // Plain Q&A — build distractors from other cards' backs
             displayQuestion = card.front
-            correctAnswer = card.back
-            let pool = deck.cards.filter { $0.id != card.id }.map(\.back)
+            correctAnswer = card.cleanMCQAnswer
+            let pool = (cards ?? deck.cards).filter { $0.id != card.id }.map(\.cleanMCQAnswer)
             let distractors = PracticeQueue.distractors(for: correctAnswer, from: pool, n: 3)
             options = ([correctAnswer] + distractors).shuffled()
         }
@@ -141,14 +159,26 @@ struct MultipleChoiceView: View {
 
     private var summary: some View {
         VStack(spacing: Theme.Space.m) {
-            Image(systemName: "sparkles").font(.system(size: 56))
-                .foregroundStyle(Theme.focus)
-            Text(Encouragement.random(Encouragement.sessionDone))
-                .font(.title3).fontWeight(.semibold)
-            Text("\(rightCount) right · \(wrongCount) missed").foregroundStyle(.secondary)
-            HStack {
-                Button("Done") { dismiss() }.buttonStyle(.bordered)
-                Button("Another round") { loadQueue() }.buttonStyle(.borderedProminent)
+            if !isRepass && !requeuePile.isEmpty {
+                Image(systemName: "arrow.clockwise").font(.system(size: 56))
+                    .foregroundStyle(Theme.stretch)
+                Text("\(rightCount) right · \(wrongCount) missed")
+                    .font(.title3).fontWeight(.semibold)
+                Text("\(requeuePile.count) card\(requeuePile.count == 1 ? "" : "s") you missed — review them once more.")
+                    .font(.subheadline).foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                Button("Re-practice missed") { startRepass() }.buttonStyle(.borderedProminent)
+                Button("Done for now") { dismiss() }.buttonStyle(.bordered)
+            } else {
+                Image(systemName: "sparkles").font(.system(size: 56))
+                    .foregroundStyle(Theme.focus)
+                Text(Encouragement.random(Encouragement.sessionDone))
+                    .font(.title3).fontWeight(.semibold)
+                Text("\(rightCount) right · \(wrongCount) missed").foregroundStyle(.secondary)
+                HStack {
+                    Button("Done") { dismiss() }.buttonStyle(.bordered)
+                    Button("Another round") { loadQueue() }.buttonStyle(.borderedProminent)
+                }
             }
         }
         .padding()
@@ -157,7 +187,7 @@ struct MultipleChoiceView: View {
     private var questionView: some View {
         let card = queue[index]
         return VStack(spacing: Theme.Space.m) {
-            progress
+            progress(for: card)
 
             ZStack {
                 RoundedRectangle(cornerRadius: Theme.Radius.l)
@@ -178,6 +208,11 @@ struct MultipleChoiceView: View {
             }
             .frame(minHeight: 160)
             .padding(.horizontal, Theme.Space.m)
+            .id(card.id)
+            .transition(.asymmetric(
+                insertion: .move(edge: .trailing).combined(with: .opacity),
+                removal: .move(edge: .leading).combined(with: .opacity)
+            ))
 
             VStack(spacing: Theme.Space.s) {
                 ForEach(options, id: \.self) { opt in
@@ -186,7 +221,7 @@ struct MultipleChoiceView: View {
                             Text(opt)
                                 .multilineTextAlignment(.leading)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                            if let picked, opt == correctAnswer {
+                            if picked != nil, opt == correctAnswer {
                                 Image(systemName: "checkmark.circle.fill")
                                     .foregroundStyle(Theme.success)
                             } else if let picked, opt == picked {
@@ -199,20 +234,50 @@ struct MultipleChoiceView: View {
                     }
                     .buttonStyle(.plain)
                     .disabled(picked != nil)
+                    .animation(.easeOut(duration: 0.12), value: picked)
                 }
             }
             .padding(.horizontal, Theme.Space.m)
+            .id(card.id)
+            .transition(.asymmetric(
+                insertion: .move(edge: .trailing).combined(with: .opacity),
+                removal: .move(edge: .leading).combined(with: .opacity)
+            ))
 
             if picked != nil {
-                Button("Next") { advance() }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background(Color.accentColor, in: RoundedRectangle(cornerRadius: Theme.Radius.m))
-                    .foregroundStyle(.white)
+                if let expl = card.explanation {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(picked == correctAnswer ? "Explanation" : "Incorrect — Explanation")
+                            .font(.caption.bold())
+                            .foregroundStyle(picked == correctAnswer ? Theme.success : Theme.stretch)
+                        Text(expl)
+                            .font(.callout)
+                            .foregroundStyle(.primary)
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .padding()
+                    .background(Theme.surface(Color(hex: deck.colorHex)).opacity(0.5), in: RoundedRectangle(cornerRadius: Theme.Radius.m))
                     .padding(.horizontal, Theme.Space.m)
-                    .padding(.bottom, Theme.Space.m)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+
+                Button { advance() } label: {
+                    Text("Next →")
+                        .font(.subheadline.bold())
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 14)
+                        .contentShape(Rectangle())
+                }
+                .background(Color.accentColor, in: RoundedRectangle(cornerRadius: Theme.Radius.m))
+                .foregroundStyle(.white)
+                .padding(.horizontal, Theme.Space.m)
+                .padding(.bottom, Theme.Space.m)
+                .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
+        .animation(.easeOut(duration: 0.18), value: picked)
+        .animation(.easeOut(duration: 0.18), value: card.id)
     }
 
     private func background(for option: String) -> Color {
@@ -222,10 +287,12 @@ struct MultipleChoiceView: View {
         return Color(.secondarySystemBackground)
     }
 
-    private var progress: some View {
+    private func progress(for card: Card) -> some View {
         VStack(spacing: 4) {
             HStack {
                 Text("\(index + 1) of \(queue.count)").font(.footnote).foregroundStyle(.secondary)
+                Spacer()
+                DifficultyPicker(card: card)
                 Spacer()
                 Text("✓ \(rightCount)").font(.footnote).foregroundStyle(Theme.success)
             }
@@ -242,16 +309,27 @@ struct MultipleChoiceView: View {
         if opt == correctAnswer {
             card.rate(4)
             rightCount += 1
+            HapticService.correct()
         } else {
             card.rate(2)
             wrongCount += 1
+            HapticService.wrong()
+            if !isRepass { requeuePile.append(card) }
         }
         StudyHistory.recordReview()
         if wasNew { StudyHistory.bumpNewCardsIntroduced(by: 1) }
     }
 
     private func advance() {
-        index += 1
+        withAnimation(.easeOut(duration: 0.18)) { index += 1 }
         if index < queue.count { prepareCurrent() }
+    }
+
+    private func startRepass() {
+        queue = requeuePile.shuffled()
+        requeuePile = []
+        isRepass = true
+        index = 0
+        prepareCurrent()
     }
 }

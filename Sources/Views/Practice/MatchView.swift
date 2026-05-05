@@ -3,10 +3,12 @@ import SwiftData
 
 struct MatchView: View {
     let deck: Deck
+    var cardFilter: PracticeQueue.CardFilter = .all
     @Environment(\.dismiss) private var dismiss
     @AppStorage("dailyNewCardLimit") private var dailyNewCardLimit = PracticeQueue.defaultDailyNewCardLimit
-
-    private let pairsPerRound = 6
+    @AppStorage("neverForgetEnabled") private var neverForgetEnabled = false
+    private let maxPairsPerRound = 6
+    private let minPairsRequired = 4
 
     @State private var roundCards: [Card] = []
     @State private var fronts: [Tile] = []
@@ -39,18 +41,24 @@ struct MatchView: View {
         var pool = PracticeQueue.ordered(
             deck.cards,
             onlyDue: true,
+            roundSize: nil,
+            filter: cardFilter,
             dailyNewCardLimit: dailyNewCardLimit,
-            roundSize: nil
+            neverForgetEnabled: neverForgetEnabled
         )
-        if pool.count < pairsPerRound {
+        if pool.count < minPairsRequired {
             pool = PracticeQueue.ordered(
                 deck.cards,
                 onlyDue: false,
+                roundSize: nil,
+                filter: cardFilter,
                 dailyNewCardLimit: dailyNewCardLimit,
-                roundSize: nil
+                neverForgetEnabled: neverForgetEnabled
             )
         }
-        let picks = Array(pool.prefix(pairsPerRound))
+        // Use however many we have, up to maxPairsPerRound (minimum 4 to play)
+        let pairCount = min(pool.count, maxPairsPerRound)
+        let picks = Array(pool.prefix(pairCount))
         roundCards = picks
         fronts = picks.map { Tile(id: $0.id, text: $0.front) }
         backs = picks.map { Tile(id: $0.id, text: $0.back) }.shuffled()
@@ -67,7 +75,7 @@ struct MatchView: View {
         VStack(spacing: Theme.Space.m) {
             Image(systemName: "square.grid.2x2").font(.system(size: 48))
                 .foregroundStyle(.secondary)
-            Text("Need at least \(pairsPerRound) cards.").font(.headline)
+            Text("Need at least \(minPairsRequired) cards.").font(.headline)
             Button("Done") { dismiss() }.buttonStyle(.borderedProminent)
         }
     }
@@ -85,7 +93,6 @@ struct MatchView: View {
                 Button("Done") { dismiss() }.buttonStyle(.bordered)
                 Button("Next round") { startRound() }
                     .buttonStyle(.borderedProminent)
-                    .disabled(deck.cards.count < pairsPerRound)
             }
         }
         .padding()
@@ -94,7 +101,7 @@ struct MatchView: View {
     private var gameBoard: some View {
         VStack(spacing: Theme.Space.s) {
             HStack {
-                Text("Pairs left: \(pairsPerRound - matched.count)").font(.footnote)
+                Text("Pairs left: \(roundCards.count - matched.count)").font(.footnote)
                     .foregroundStyle(.secondary)
                 Spacer()
                 if mistakes > 0 {
@@ -142,8 +149,8 @@ struct MatchView: View {
         .buttonStyle(.plain)
         .disabled(isMatched)
         .opacity(isMatched ? 0.35 : 1)
-        .animation(.easeInOut(duration: 0.18), value: matched)
-        .animation(.easeInOut(duration: 0.15), value: wrongFlash?.front)
+        .animation(.easeOut(duration: 0.12), value: matched)
+        .animation(.easeOut(duration: 0.1), value: wrongFlash?.front)
     }
 
     private func background(selected: Bool, matched: Bool, flashing: Bool) -> Color {
@@ -166,6 +173,7 @@ struct MatchView: View {
             matched.insert(frontId)
             selectedFront = nil
             selectedBack = nil
+            HapticService.match()
             if let card = roundCards.first(where: { $0.id == frontId }) {
                 let wasNew = card.isNew
                 card.rate(4)
@@ -177,12 +185,13 @@ struct MatchView: View {
             }
         } else {
             mistakes += 1
+            HapticService.mismatch()
             if let card = roundCards.first(where: { $0.id == frontId }) {
                 card.rate(2)
                 StudyHistory.recordReview()
             }
             wrongFlash = (frontId, backId)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.28) {
                 self.wrongFlash = nil
                 self.selectedFront = nil
                 self.selectedBack = nil
